@@ -1,11 +1,11 @@
 const PASSWORD_ALGORITHM = 'pbkdf2_sha256';
-const PBKDF2_ITERATIONS = 10000;
+const PBKDF2_ITERATIONS = 210000;
 const MIN_ACCEPTED_PBKDF2_ITERATIONS = 10000;
 const SALT_BYTES = 16;
 const HASH_BYTES = 32;
 const LEGACY_SALT = 'cf-monitor-salt';
 const LEGACY_SHA256_HEX_RE = /^[a-f0-9]{64}$/i;
-const MIN_ADMIN_PASSWORD_LENGTH = 6;
+const MIN_ADMIN_PASSWORD_LENGTH = 10;
 
 type ParsedPasswordHash = {
   iterations: number;
@@ -119,6 +119,11 @@ export function needsPasswordRehash(hash: string): boolean {
 export function validateAdminPasswordStrength(password: string, _username = ''): string | null {
   if (Array.from(password).length < MIN_ADMIN_PASSWORD_LENGTH) {
     return `密码至少需要 ${MIN_ADMIN_PASSWORD_LENGTH} 位`;
+  }
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  if (!hasLetter || !hasNumber) {
+    return '密码必须同时包含字母和数字';
   }
 
   return null;
