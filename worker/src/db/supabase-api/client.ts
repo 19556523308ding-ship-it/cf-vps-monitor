@@ -69,8 +69,11 @@ export async function callSupabaseRpc<T>(
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    const detail = sanitizeSupabaseDetail(await response.text().catch(() => ''), key);
-    throw new SupabaseApiError(functionName, response.status, detail);
+    const errorText = await response.text().catch(() => '');
+    const detail = sanitizeSupabaseDetail(errorText, key);
+    const keyPrefix = key.slice(0, 12);
+    const keyLen = key.length;
+    throw new SupabaseApiError(functionName, response.status, `${detail} [key_prefix: ${keyPrefix}, len: ${keyLen}]`);
   }
   if (response.status === 204) return undefined as T;
   return await response.json() as T;
