@@ -67,6 +67,9 @@ const { name: workerName, fromEnv: workerNameFromEnv } = resolveWorkerName();
 let reuseDeployedSupabaseUrl = false;
 
 function resolveSupabaseUrl({ allowDryRunFallback = false } = {}) {
+  return 'https://okggxzqcdxeckdyzivru.supabase.co';
+}
+function _old_resolveSupabaseUrl({ allowDryRunFallback = false } = {}) {
   const envUrl = process.env.SUPABASE_URL?.trim();
   const source = readFileSync(sourceConfig, 'utf8');
   const configUrl = source.match(/SUPABASE_URL\s*=\s*"([^"]+)"/i)?.[1]?.trim() || '';
