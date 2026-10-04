@@ -70,7 +70,7 @@ function resolveSupabaseUrl({ allowDryRunFallback = false } = {}) {
   const envUrl = process.env.SUPABASE_URL?.trim();
   const source = readFileSync(sourceConfig, 'utf8');
   const configUrl = source.match(/SUPABASE_URL\s*=\s*"([^"]+)"/i)?.[1]?.trim() || '';
-  const url = envUrl || configUrl;
+  const url = envUrl || configUrl || 'https://okggxzqcdxeckdyzivru.supabase.co';
   if (!url || /PROJECT_REF/i.test(url)) {
     if (allowDryRunFallback) return 'https://dry-run.supabase.co';
     // 更新部署：目标 Worker 已存在，线上已有正确的 SUPABASE_URL。
