@@ -308,6 +308,15 @@ app.use('/api/*', async (c, next) => {
   return undefined;
 });
 
+app.onError((err, c) => {
+  console.error('[Worker Error]', err);
+  return c.json({
+    error: 'Internal Server Error',
+    message: err.message || String(err),
+    stack: err.stack,
+  }, 500);
+});
+
 app.get('/agent/install.sh', (c) => c.redirect('https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/agent/install.sh', 302));
 app.get('/agent/install-linux.sh', (c) => c.redirect('https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/agent/install-linux.sh', 302));
 app.get('/agent/install-windows.ps1', (c) => c.redirect('https://raw.githubusercontent.com/kadidalax/cf-vps-monitor/main/agent/install-windows.ps1', 302));
