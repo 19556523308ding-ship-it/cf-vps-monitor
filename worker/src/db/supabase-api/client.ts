@@ -46,7 +46,7 @@ function readSupabaseConfig(env: SupabaseApiEnv): { url: string; key: string } {
 function supabaseRpcHeaders(key: string): Record<string, string> {
   return {
     apikey: key,
-    ...(key.startsWith('sb_secret_') ? {} : { Authorization: `Bearer ${key}` }),
+    Authorization: `Bearer ${key}`,
     'Content-Type': 'application/json',
     Accept: 'application/json',
   };
