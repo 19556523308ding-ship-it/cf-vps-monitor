@@ -37,7 +37,9 @@ export const defaultAgentInstallOptions: AgentInstallOptions = {
 };
 
 export const CF_MONITOR_BRANCH = 'main';
-export const CF_MONITOR_AGENT_SCRIPT_REF = `refs/heads/${CF_MONITOR_BRANCH}`;
+// raw.githubusercontent.com 只接受短 ref（main / <commit sha>），
+// 不能用 GitHub API 风格的 refs/heads/main，否则 raw 会直接返回 404。
+export const CF_MONITOR_AGENT_SCRIPT_REF = CF_MONITOR_BRANCH;
 export const CF_MONITOR_RELEASE_BASE = `https://github.com/${CF_MONITOR_REPOSITORY}/releases/latest/download`;
 export const CF_MONITOR_AGENT_SCRIPT_BASE = `https://raw.githubusercontent.com/${CF_MONITOR_REPOSITORY}/${CF_MONITOR_AGENT_SCRIPT_REF}/agent`;
 
